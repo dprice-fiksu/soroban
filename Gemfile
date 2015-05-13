@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'treetop', '~> 1.5.3'
+gem 'treetop', '1.4.15'
 
 group :development do
   gem 'rubyXL', '~> 1.2.10'

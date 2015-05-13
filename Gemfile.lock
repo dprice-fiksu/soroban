@@ -53,8 +53,9 @@ GEM
     rspec-mocks (2.14.6)
     rubyXL (1.2.10)
     rubyzip (0.9.9)
-    treetop (1.5.3)
-      polyglot (~> 0.3)
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
     yard (0.8.7.4)
 
 PLATFORMS
@@ -70,5 +71,5 @@ DEPENDENCIES
   rspec (~> 2.14.1)
   rubyXL (~> 1.2.10)
   rubyzip (~> 0.9.9)
-  treetop (~> 1.5.3)
+  treetop (= 1.4.15)
   yard (~> 0.7)

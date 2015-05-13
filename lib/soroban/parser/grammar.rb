@@ -21,7 +21,7 @@ module Soroban
       if node_cache[:formula].has_key?(index)
         cached = node_cache[:formula][index]
         if cached
-          node_cache[:formula][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -29,9 +29,9 @@ module Soroban
 
       i0 = index
       i1, s1 = index, []
-      if (match_len = has_terminal?('=', false, index))
-        r2 = true
-        @index += match_len
+      if has_terminal?('=', false, index)
+        r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        @index += 1
       else
         terminal_parse_failure('=')
         r2 = nil
@@ -58,22 +58,18 @@ module Soroban
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         r6 = _nt_string
         if r6
-          r6 = SyntaxNode.new(input, (index-1)...index) if r6 == true
           r0 = r6
         else
           r7 = _nt_number
           if r7
-            r7 = SyntaxNode.new(input, (index-1)...index) if r7 == true
             r0 = r7
           else
             r8 = _nt_boolean
             if r8
-              r8 = SyntaxNode.new(input, (index-1)...index) if r8 == true
               r0 = r8
             else
               @index = i0
@@ -106,7 +102,7 @@ module Soroban
       if node_cache[:logical].has_key?(index)
         cached = node_cache[:logical][index]
         if cached
-          node_cache[:logical][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -127,9 +123,9 @@ module Soroban
           end
           s3 << r4
           if r4
-            if (match_len = has_terminal?('or', false, index))
-              r6 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-              @index += match_len
+            if has_terminal?('or', false, index)
+              r6 = instantiate_node(SyntaxNode,input, index...(index + 2))
+              @index += 2
             else
               terminal_parse_failure('or')
               r6 = nil
@@ -196,7 +192,7 @@ module Soroban
       if node_cache[:and].has_key?(index)
         cached = node_cache[:and][index]
         if cached
-          node_cache[:and][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -217,9 +213,9 @@ module Soroban
           end
           s3 << r4
           if r4
-            if (match_len = has_terminal?('and', false, index))
-              r6 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-              @index += match_len
+            if has_terminal?('and', false, index)
+              r6 = instantiate_node(SyntaxNode,input, index...(index + 3))
+              @index += 3
             else
               terminal_parse_failure('and')
               r6 = nil
@@ -280,7 +276,7 @@ module Soroban
       if node_cache[:truthval].has_key?(index)
         cached = node_cache[:truthval][index]
         if cached
-          node_cache[:truthval][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -289,13 +285,12 @@ module Soroban
       i0 = index
       r1 = _nt_comparison
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         i2, s2 = index, []
-        if (match_len = has_terminal?('(', false, index))
-          r3 = true
-          @index += match_len
+        if has_terminal?('(', false, index)
+          r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('(')
           r3 = nil
@@ -321,9 +316,9 @@ module Soroban
               end
               s2 << r7
               if r7
-                if (match_len = has_terminal?(')', false, index))
-                  r9 = true
-                  @index += match_len
+                if has_terminal?(')', false, index)
+                  r9 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                  @index += 1
                 else
                   terminal_parse_failure(')')
                   r9 = nil
@@ -341,12 +336,10 @@ module Soroban
           r2 = nil
         end
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
           r10 = _nt_boolean
           if r10
-            r10 = SyntaxNode.new(input, (index-1)...index) if r10 == true
             r0 = r10
           else
             @index = i0
@@ -365,55 +358,51 @@ module Soroban
       if node_cache[:boolean].has_key?(index)
         cached = node_cache[:boolean][index]
         if cached
-          node_cache[:boolean][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
       end
 
       i0 = index
-      if (match_len = has_terminal?('true', false, index))
-        r1 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-        @index += match_len
+      if has_terminal?('true', false, index)
+        r1 = instantiate_node(SyntaxNode,input, index...(index + 4))
+        @index += 4
       else
         terminal_parse_failure('true')
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
-        if (match_len = has_terminal?('false', false, index))
-          r2 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-          @index += match_len
+        if has_terminal?('false', false, index)
+          r2 = instantiate_node(SyntaxNode,input, index...(index + 5))
+          @index += 5
         else
           terminal_parse_failure('false')
           r2 = nil
         end
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
-          if (match_len = has_terminal?('TRUE', false, index))
-            r3 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-            @index += match_len
+          if has_terminal?('TRUE', false, index)
+            r3 = instantiate_node(SyntaxNode,input, index...(index + 4))
+            @index += 4
           else
             terminal_parse_failure('TRUE')
             r3 = nil
           end
           if r3
-            r3 = SyntaxNode.new(input, (index-1)...index) if r3 == true
             r0 = r3
           else
-            if (match_len = has_terminal?('FALSE', false, index))
-              r4 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-              @index += match_len
+            if has_terminal?('FALSE', false, index)
+              r4 = instantiate_node(SyntaxNode,input, index...(index + 5))
+              @index += 5
             else
               terminal_parse_failure('FALSE')
               r4 = nil
             end
             if r4
-              r4 = SyntaxNode.new(input, (index-1)...index) if r4 == true
               r0 = r4
             else
               @index = i0
@@ -450,7 +439,7 @@ module Soroban
       if node_cache[:comparison].has_key?(index)
         cached = node_cache[:comparison][index]
         if cached
-          node_cache[:comparison][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -521,77 +510,71 @@ module Soroban
       if node_cache[:comparator].has_key?(index)
         cached = node_cache[:comparator][index]
         if cached
-          node_cache[:comparator][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
       end
 
       i0 = index
-      if (match_len = has_terminal?('=', false, index))
-        r1 = instantiate_node(Equal,input, index...(index + match_len))
-        @index += match_len
+      if has_terminal?('=', false, index)
+        r1 = instantiate_node(Equal,input, index...(index + 1))
+        @index += 1
       else
         terminal_parse_failure('=')
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
-        if (match_len = has_terminal?('<>', false, index))
-          r2 = instantiate_node(NotEqual,input, index...(index + match_len))
-          @index += match_len
+        if has_terminal?('<>', false, index)
+          r2 = instantiate_node(NotEqual,input, index...(index + 2))
+          @index += 2
         else
           terminal_parse_failure('<>')
           r2 = nil
         end
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
-          if (match_len = has_terminal?('>=', false, index))
-            r3 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-            @index += match_len
+          if has_terminal?('>=', false, index)
+            r3 = instantiate_node(SyntaxNode,input, index...(index + 2))
+            @index += 2
           else
             terminal_parse_failure('>=')
             r3 = nil
           end
           if r3
-            r3 = SyntaxNode.new(input, (index-1)...index) if r3 == true
             r0 = r3
           else
-            if (match_len = has_terminal?('<=', false, index))
-              r4 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-              @index += match_len
+            if has_terminal?('<=', false, index)
+              r4 = instantiate_node(SyntaxNode,input, index...(index + 2))
+              @index += 2
             else
               terminal_parse_failure('<=')
               r4 = nil
             end
             if r4
-              r4 = SyntaxNode.new(input, (index-1)...index) if r4 == true
               r0 = r4
             else
-              if (match_len = has_terminal?('>', false, index))
-                r5 = true
-                @index += match_len
+              if has_terminal?('>', false, index)
+                r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                @index += 1
               else
                 terminal_parse_failure('>')
                 r5 = nil
               end
               if r5
-                r5 = SyntaxNode.new(input, (index-1)...index) if r5 == true
                 r0 = r5
               else
-                if (match_len = has_terminal?('<', false, index))
-                  r6 = true
-                  @index += match_len
+                if has_terminal?('<', false, index)
+                  r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                  @index += 1
                 else
                   terminal_parse_failure('<')
                   r6 = nil
                 end
                 if r6
-                  r6 = SyntaxNode.new(input, (index-1)...index) if r6 == true
                   r0 = r6
                 else
                   @index = i0
@@ -630,7 +613,7 @@ module Soroban
       if node_cache[:expression].has_key?(index)
         cached = node_cache[:expression][index]
         if cached
-          node_cache[:expression][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -701,33 +684,31 @@ module Soroban
       if node_cache[:additive_operator].has_key?(index)
         cached = node_cache[:additive_operator][index]
         if cached
-          node_cache[:additive_operator][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
       end
 
       i0 = index
-      if (match_len = has_terminal?('+', false, index))
-        r1 = true
-        @index += match_len
+      if has_terminal?('+', false, index)
+        r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        @index += 1
       else
         terminal_parse_failure('+')
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
-        if (match_len = has_terminal?('-', false, index))
-          r2 = true
-          @index += match_len
+        if has_terminal?('-', false, index)
+          r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('-')
           r2 = nil
         end
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
           @index = i0
@@ -762,7 +743,7 @@ module Soroban
       if node_cache[:multiplicative].has_key?(index)
         cached = node_cache[:multiplicative][index]
         if cached
-          node_cache[:multiplicative][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -833,44 +814,41 @@ module Soroban
       if node_cache[:multiplicative_operator].has_key?(index)
         cached = node_cache[:multiplicative_operator][index]
         if cached
-          node_cache[:multiplicative_operator][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
       end
 
       i0 = index
-      if (match_len = has_terminal?('^', false, index))
-        r1 = instantiate_node(Pow,input, index...(index + match_len))
-        @index += match_len
+      if has_terminal?('^', false, index)
+        r1 = instantiate_node(Pow,input, index...(index + 1))
+        @index += 1
       else
         terminal_parse_failure('^')
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
-        if (match_len = has_terminal?('*', false, index))
-          r2 = true
-          @index += match_len
+        if has_terminal?('*', false, index)
+          r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('*')
           r2 = nil
         end
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
-          if (match_len = has_terminal?('/', false, index))
-            r3 = true
-            @index += match_len
+          if has_terminal?('/', false, index)
+            r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            @index += 1
           else
             terminal_parse_failure('/')
             r3 = nil
           end
           if r3
-            r3 = SyntaxNode.new(input, (index-1)...index) if r3 == true
             r0 = r3
           else
             @index = i0
@@ -902,7 +880,7 @@ module Soroban
       if node_cache[:value].has_key?(index)
         cached = node_cache[:value][index]
         if cached
-          node_cache[:value][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -911,13 +889,12 @@ module Soroban
       i0 = index
       r1 = _nt_function
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         i2, s2 = index, []
-        if (match_len = has_terminal?('(', false, index))
-          r3 = true
-          @index += match_len
+        if has_terminal?('(', false, index)
+          r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('(')
           r3 = nil
@@ -943,9 +920,9 @@ module Soroban
               end
               s2 << r7
               if r7
-                if (match_len = has_terminal?(')', false, index))
-                  r9 = true
-                  @index += match_len
+                if has_terminal?(')', false, index)
+                  r9 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                  @index += 1
                 else
                   terminal_parse_failure(')')
                   r9 = nil
@@ -963,38 +940,32 @@ module Soroban
           r2 = nil
         end
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
           r10 = _nt_range
           if r10
-            r10 = SyntaxNode.new(input, (index-1)...index) if r10 == true
             r0 = r10
           else
             r11 = _nt_number
             if r11
-              r11 = SyntaxNode.new(input, (index-1)...index) if r11 == true
               r0 = r11
             else
               r12 = _nt_boolean
               if r12
-                r12 = SyntaxNode.new(input, (index-1)...index) if r12 == true
                 r0 = r12
               else
                 r13 = _nt_identifier
                 if r13
-                  r13 = SyntaxNode.new(input, (index-1)...index) if r13 == true
                   r0 = r13
                 else
                   r14 = _nt_string
                   if r14
-                    r14 = SyntaxNode.new(input, (index-1)...index) if r14 == true
                     r0 = r14
                   else
                     i15, s15 = index, []
-                    if (match_len = has_terminal?('-', false, index))
-                      r16 = true
-                      @index += match_len
+                    if has_terminal?('-', false, index)
+                      r16 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                      @index += 1
                     else
                       terminal_parse_failure('-')
                       r16 = nil
@@ -1012,7 +983,6 @@ module Soroban
                       r15 = nil
                     end
                     if r15
-                      r15 = SyntaxNode.new(input, (index-1)...index) if r15 == true
                       r0 = r15
                     else
                       @index = i0
@@ -1039,7 +1009,7 @@ module Soroban
       if node_cache[:function].has_key?(index)
         cached = node_cache[:function][index]
         if cached
-          node_cache[:function][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1048,11 +1018,10 @@ module Soroban
       i0, s0 = index, []
       s1, i1 = [], index
       loop do
-        if has_terminal?(@regexps[gr = '\A[a-zA-Z]'] ||= Regexp.new(gr), :regexp, index)
+        if has_terminal?('\G[a-zA-Z]', true, index)
           r2 = true
           @index += 1
         else
-          terminal_parse_failure('[a-zA-Z]')
           r2 = nil
         end
         if r2
@@ -1069,9 +1038,9 @@ module Soroban
       end
       s0 << r1
       if r1
-        if (match_len = has_terminal?('(', false, index))
-          r3 = true
-          @index += match_len
+        if has_terminal?('(', false, index)
+          r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('(')
           r3 = nil
@@ -1102,9 +1071,9 @@ module Soroban
               end
               s0 << r8
               if r8
-                if (match_len = has_terminal?(')', false, index))
-                  r10 = true
-                  @index += match_len
+                if has_terminal?(')', false, index)
+                  r10 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                  @index += 1
                 else
                   terminal_parse_failure(')')
                   r10 = nil
@@ -1146,7 +1115,7 @@ module Soroban
       if node_cache[:arguments].has_key?(index)
         cached = node_cache[:arguments][index]
         if cached
-          node_cache[:arguments][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1167,9 +1136,9 @@ module Soroban
           end
           s3 << r4
           if r4
-            if (match_len = has_terminal?(',', false, index))
-              r6 = true
-              @index += match_len
+            if has_terminal?(',', false, index)
+              r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure(',')
               r6 = nil
@@ -1241,7 +1210,7 @@ module Soroban
       if node_cache[:number].has_key?(index)
         cached = node_cache[:number][index]
         if cached
-          node_cache[:number][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1250,23 +1219,20 @@ module Soroban
       i0 = index
       r1 = _nt_percentage
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         r2 = _nt_float
         if r2
-          r2 = SyntaxNode.new(input, (index-1)...index) if r2 == true
           r0 = r2
         else
           r3 = _nt_integer
           if r3
-            r3 = SyntaxNode.new(input, (index-1)...index) if r3 == true
             r0 = r3
           else
             i4, s4 = index, []
-            if (match_len = has_terminal?('-', false, index))
-              r5 = true
-              @index += match_len
+            if has_terminal?('-', false, index)
+              r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure('-')
               r5 = nil
@@ -1284,13 +1250,12 @@ module Soroban
               r4 = nil
             end
             if r4
-              r4 = SyntaxNode.new(input, (index-1)...index) if r4 == true
               r0 = r4
             else
               i7, s7 = index, []
-              if (match_len = has_terminal?('-', false, index))
-                r8 = true
-                @index += match_len
+              if has_terminal?('-', false, index)
+                r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                @index += 1
               else
                 terminal_parse_failure('-')
                 r8 = nil
@@ -1308,13 +1273,12 @@ module Soroban
                 r7 = nil
               end
               if r7
-                r7 = SyntaxNode.new(input, (index-1)...index) if r7 == true
                 r0 = r7
               else
                 i10, s10 = index, []
-                if (match_len = has_terminal?('-', false, index))
-                  r11 = true
-                  @index += match_len
+                if has_terminal?('-', false, index)
+                  r11 = instantiate_node(SyntaxNode,input, index...(index + 1))
+                  @index += 1
                 else
                   terminal_parse_failure('-')
                   r11 = nil
@@ -1332,7 +1296,6 @@ module Soroban
                   r10 = nil
                 end
                 if r10
-                  r10 = SyntaxNode.new(input, (index-1)...index) if r10 == true
                   r0 = r10
                 else
                   @index = i0
@@ -1368,7 +1331,7 @@ module Soroban
       if node_cache[:percentage].has_key?(index)
         cached = node_cache[:percentage][index]
         if cached
-          node_cache[:percentage][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1387,9 +1350,9 @@ module Soroban
         end
         s1 << r3
         if r3
-          if (match_len = has_terminal?('%', false, index))
-            r5 = true
-            @index += match_len
+          if has_terminal?('%', false, index)
+            r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            @index += 1
           else
             terminal_parse_failure('%')
             r5 = nil
@@ -1405,7 +1368,6 @@ module Soroban
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         i6, s6 = index, []
@@ -1420,9 +1382,9 @@ module Soroban
           end
           s6 << r8
           if r8
-            if (match_len = has_terminal?('%', false, index))
-              r10 = true
-              @index += match_len
+            if has_terminal?('%', false, index)
+              r10 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure('%')
               r10 = nil
@@ -1438,7 +1400,6 @@ module Soroban
           r6 = nil
         end
         if r6
-          r6 = SyntaxNode.new(input, (index-1)...index) if r6 == true
           r0 = r6
         else
           @index = i0
@@ -1459,7 +1420,7 @@ module Soroban
       if node_cache[:float].has_key?(index)
         cached = node_cache[:float][index]
         if cached
-          node_cache[:float][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1468,11 +1429,10 @@ module Soroban
       i0, s0 = index, []
       s1, i1 = [], index
       loop do
-        if has_terminal?(@regexps[gr = '\A[0-9]'] ||= Regexp.new(gr), :regexp, index)
+        if has_terminal?('\G[0-9]', true, index)
           r2 = true
           @index += 1
         else
-          terminal_parse_failure('[0-9]')
           r2 = nil
         end
         if r2
@@ -1484,9 +1444,9 @@ module Soroban
       r1 = instantiate_node(SyntaxNode,input, i1...index, s1)
       s0 << r1
       if r1
-        if (match_len = has_terminal?('.', false, index))
-          r3 = true
-          @index += match_len
+        if has_terminal?('.', false, index)
+          r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('.')
           r3 = nil
@@ -1495,11 +1455,10 @@ module Soroban
         if r3
           s4, i4 = [], index
           loop do
-            if has_terminal?(@regexps[gr = '\A[0-9]'] ||= Regexp.new(gr), :regexp, index)
+            if has_terminal?('\G[0-9]', true, index)
               r5 = true
               @index += 1
             else
-              terminal_parse_failure('[0-9]')
               r5 = nil
             end
             if r5
@@ -1535,7 +1494,7 @@ module Soroban
       if node_cache[:integer].has_key?(index)
         cached = node_cache[:integer][index]
         if cached
-          node_cache[:integer][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1543,11 +1502,10 @@ module Soroban
 
       s0, i0 = [], index
       loop do
-        if has_terminal?(@regexps[gr = '\A[0-9]'] ||= Regexp.new(gr), :regexp, index)
+        if has_terminal?('\G[0-9]', true, index)
           r1 = true
           @index += 1
         else
-          terminal_parse_failure('[0-9]')
           r1 = nil
         end
         if r1
@@ -1579,7 +1537,7 @@ module Soroban
       if node_cache[:identifier].has_key?(index)
         cached = node_cache[:identifier][index]
         if cached
-          node_cache[:identifier][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1587,22 +1545,20 @@ module Soroban
 
       i0 = index
       i1, s1 = index, []
-      if has_terminal?(@regexps[gr = '\A[a-zA-Z]'] ||= Regexp.new(gr), :regexp, index)
+      if has_terminal?('\G[a-zA-Z]', true, index)
         r2 = true
         @index += 1
       else
-        terminal_parse_failure('[a-zA-Z]')
         r2 = nil
       end
       s1 << r2
       if r2
         s3, i3 = [], index
         loop do
-          if has_terminal?(@regexps[gr = '\A[a-zA-Z0-9]'] ||= Regexp.new(gr), :regexp, index)
+          if has_terminal?('\G[a-zA-Z0-9]', true, index)
             r4 = true
             @index += 1
           else
-            terminal_parse_failure('[a-zA-Z0-9]')
             r4 = nil
           end
           if r4
@@ -1622,13 +1578,12 @@ module Soroban
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         i5, s5 = index, []
-        if (match_len = has_terminal?('$', false, index))
-          r6 = true
-          @index += match_len
+        if has_terminal?('$', false, index)
+          r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('$')
           r6 = nil
@@ -1637,11 +1592,10 @@ module Soroban
         if r6
           s7, i7 = [], index
           loop do
-            if has_terminal?(@regexps[gr = '\A[A-Za-z]'] ||= Regexp.new(gr), :regexp, index)
+            if has_terminal?('\G[A-Za-z]', true, index)
               r8 = true
               @index += 1
             else
-              terminal_parse_failure('[A-Za-z]')
               r8 = nil
             end
             if r8
@@ -1658,31 +1612,29 @@ module Soroban
           end
           s5 << r7
           if r7
-            if (match_len = has_terminal?('$', false, index))
-              r9 = true
-              @index += match_len
+            if has_terminal?('$', false, index)
+              r9 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure('$')
               r9 = nil
             end
             s5 << r9
             if r9
-              if has_terminal?(@regexps[gr = '\A[1-9]'] ||= Regexp.new(gr), :regexp, index)
+              if has_terminal?('\G[1-9]', true, index)
                 r10 = true
                 @index += 1
               else
-                terminal_parse_failure('[1-9]')
                 r10 = nil
               end
               s5 << r10
               if r10
                 s11, i11 = [], index
                 loop do
-                  if has_terminal?(@regexps[gr = '\A[0-9]'] ||= Regexp.new(gr), :regexp, index)
+                  if has_terminal?('\G[0-9]', true, index)
                     r12 = true
                     @index += 1
                   else
-                    terminal_parse_failure('[0-9]')
                     r12 = nil
                   end
                   if r12
@@ -1705,7 +1657,6 @@ module Soroban
           r5 = nil
         end
         if r5
-          r5 = SyntaxNode.new(input, (index-1)...index) if r5 == true
           r0 = r5
         else
           @index = i0
@@ -1729,7 +1680,7 @@ module Soroban
       if node_cache[:label].has_key?(index)
         cached = node_cache[:label][index]
         if cached
-          node_cache[:label][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1739,11 +1690,10 @@ module Soroban
       i1, s1 = index, []
       s2, i2 = [], index
       loop do
-        if has_terminal?(@regexps[gr = '\A[A-Za-z]'] ||= Regexp.new(gr), :regexp, index)
+        if has_terminal?('\G[A-Za-z]', true, index)
           r3 = true
           @index += 1
         else
-          terminal_parse_failure('[A-Za-z]')
           r3 = nil
         end
         if r3
@@ -1760,22 +1710,20 @@ module Soroban
       end
       s1 << r2
       if r2
-        if has_terminal?(@regexps[gr = '\A[1-9]'] ||= Regexp.new(gr), :regexp, index)
+        if has_terminal?('\G[1-9]', true, index)
           r4 = true
           @index += 1
         else
-          terminal_parse_failure('[1-9]')
           r4 = nil
         end
         s1 << r4
         if r4
           s5, i5 = [], index
           loop do
-            if has_terminal?(@regexps[gr = '\A[0-9]'] ||= Regexp.new(gr), :regexp, index)
+            if has_terminal?('\G[0-9]', true, index)
               r6 = true
               @index += 1
             else
-              terminal_parse_failure('[0-9]')
               r6 = nil
             end
             if r6
@@ -1796,13 +1744,12 @@ module Soroban
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         i7, s7 = index, []
-        if (match_len = has_terminal?('$', false, index))
-          r8 = true
-          @index += match_len
+        if has_terminal?('$', false, index)
+          r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure('$')
           r8 = nil
@@ -1811,11 +1758,10 @@ module Soroban
         if r8
           s9, i9 = [], index
           loop do
-            if has_terminal?(@regexps[gr = '\A[A-Za-z]'] ||= Regexp.new(gr), :regexp, index)
+            if has_terminal?('\G[A-Za-z]', true, index)
               r10 = true
               @index += 1
             else
-              terminal_parse_failure('[A-Za-z]')
               r10 = nil
             end
             if r10
@@ -1832,31 +1778,29 @@ module Soroban
           end
           s7 << r9
           if r9
-            if (match_len = has_terminal?('$', false, index))
-              r11 = true
-              @index += match_len
+            if has_terminal?('$', false, index)
+              r11 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure('$')
               r11 = nil
             end
             s7 << r11
             if r11
-              if has_terminal?(@regexps[gr = '\A[1-9]'] ||= Regexp.new(gr), :regexp, index)
+              if has_terminal?('\G[1-9]', true, index)
                 r12 = true
                 @index += 1
               else
-                terminal_parse_failure('[1-9]')
                 r12 = nil
               end
               s7 << r12
               if r12
                 s13, i13 = [], index
                 loop do
-                  if has_terminal?(@regexps[gr = '\A[0-9]'] ||= Regexp.new(gr), :regexp, index)
+                  if has_terminal?('\G[0-9]', true, index)
                     r14 = true
                     @index += 1
                   else
-                    terminal_parse_failure('[0-9]')
                     r14 = nil
                   end
                   if r14
@@ -1879,7 +1823,6 @@ module Soroban
           r7 = nil
         end
         if r7
-          r7 = SyntaxNode.new(input, (index-1)...index) if r7 == true
           r0 = r7
         else
           @index = i0
@@ -1906,7 +1849,7 @@ module Soroban
       if node_cache[:string].has_key?(index)
         cached = node_cache[:string][index]
         if cached
-          node_cache[:string][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -1914,9 +1857,9 @@ module Soroban
 
       i0 = index
       i1, s1 = index, []
-      if (match_len = has_terminal?('"', false, index))
-        r2 = true
-        @index += match_len
+      if has_terminal?('"', false, index)
+        r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        @index += 1
       else
         terminal_parse_failure('"')
         r2 = nil
@@ -1926,22 +1869,21 @@ module Soroban
         s3, i3 = [], index
         loop do
           i4 = index
-          if (match_len = has_terminal?('\"', false, index))
-            r5 = instantiate_node(SyntaxNode,input, index...(index + match_len))
-            @index += match_len
+          if has_terminal?('\"', false, index)
+            r5 = instantiate_node(SyntaxNode,input, index...(index + 2))
+            @index += 2
           else
             terminal_parse_failure('\"')
             r5 = nil
           end
           if r5
-            r5 = SyntaxNode.new(input, (index-1)...index) if r5 == true
             r4 = r5
           else
             i6, s6 = index, []
             i7 = index
-            if (match_len = has_terminal?('"', false, index))
-              r8 = true
-              @index += match_len
+            if has_terminal?('"', false, index)
+              r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure('"')
               r8 = nil
@@ -1955,7 +1897,7 @@ module Soroban
             s6 << r7
             if r7
               if index < input_length
-                r9 = true
+                r9 = instantiate_node(SyntaxNode,input, index...(index + 1))
                 @index += 1
               else
                 terminal_parse_failure("any character")
@@ -1971,7 +1913,6 @@ module Soroban
               r6 = nil
             end
             if r6
-              r6 = SyntaxNode.new(input, (index-1)...index) if r6 == true
               r4 = r6
             else
               @index = i4
@@ -1987,9 +1928,9 @@ module Soroban
         r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
         s1 << r3
         if r3
-          if (match_len = has_terminal?('"', false, index))
-            r10 = true
-            @index += match_len
+          if has_terminal?('"', false, index)
+            r10 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            @index += 1
           else
             terminal_parse_failure('"')
             r10 = nil
@@ -2005,13 +1946,12 @@ module Soroban
         r1 = nil
       end
       if r1
-        r1 = SyntaxNode.new(input, (index-1)...index) if r1 == true
         r0 = r1
       else
         i11, s11 = index, []
-        if (match_len = has_terminal?("'", false, index))
-          r12 = true
-          @index += match_len
+        if has_terminal?("'", false, index)
+          r12 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure("'")
           r12 = nil
@@ -2020,11 +1960,10 @@ module Soroban
         if r12
           s13, i13 = [], index
           loop do
-            if has_terminal?(@regexps[gr = '\A[^\']'] ||= Regexp.new(gr), :regexp, index)
+            if has_terminal?('\G[^\']', true, index)
               r14 = true
               @index += 1
             else
-              terminal_parse_failure('[^\']')
               r14 = nil
             end
             if r14
@@ -2036,9 +1975,9 @@ module Soroban
           r13 = instantiate_node(SyntaxNode,input, i13...index, s13)
           s11 << r13
           if r13
-            if (match_len = has_terminal?("'", false, index))
-              r15 = true
-              @index += match_len
+            if has_terminal?("'", false, index)
+              r15 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
             else
               terminal_parse_failure("'")
               r15 = nil
@@ -2054,7 +1993,6 @@ module Soroban
           r11 = nil
         end
         if r11
-          r11 = SyntaxNode.new(input, (index-1)...index) if r11 == true
           r0 = r11
         else
           @index = i0
@@ -2082,7 +2020,7 @@ module Soroban
       if node_cache[:range].has_key?(index)
         cached = node_cache[:range][index]
         if cached
-          node_cache[:range][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -2092,9 +2030,9 @@ module Soroban
       r1 = _nt_label
       s0 << r1
       if r1
-        if (match_len = has_terminal?(':', false, index))
-          r2 = true
-          @index += match_len
+        if has_terminal?(':', false, index)
+          r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
         else
           terminal_parse_failure(':')
           r2 = nil
@@ -2123,7 +2061,7 @@ module Soroban
       if node_cache[:space].has_key?(index)
         cached = node_cache[:space][index]
         if cached
-          node_cache[:space][index] = cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+          cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
           @index = cached.interval.end
         end
         return cached
@@ -2131,11 +2069,10 @@ module Soroban
 
       s0, i0 = [], index
       loop do
-        if has_terminal?(@regexps[gr = '\A[\\s]'] ||= Regexp.new(gr), :regexp, index)
+        if has_terminal?('\G[\\s]', true, index)
           r1 = true
           @index += 1
         else
-          terminal_parse_failure('[\\s]')
           r1 = nil
         end
         if r1
